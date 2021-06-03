@@ -1,6 +1,9 @@
 @file:Suppress("LocalVariableName")
 
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_SRC_DIR_KOTLIN
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_TEST_SRC_DIR_KOTLIN
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.0"
@@ -16,7 +19,9 @@ plugins {
 }
 
 group = "io.github.christian-draeger"
-version = "1.0-SNAPSHOT"
+
+val release_version: String by project
+version = release_version
 
 repositories {
     mavenCentral()
@@ -53,8 +58,8 @@ detekt {
     toolVersion = detekt_version
     autoCorrect = true
     input = files(
-        io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_SRC_DIR_KOTLIN,
-        io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_TEST_SRC_DIR_KOTLIN
+        DEFAULT_SRC_DIR_KOTLIN,
+        DEFAULT_TEST_SRC_DIR_KOTLIN,
     )
     buildUponDefaultConfig = true
     config = files("$rootDir/detekt.yml")
@@ -116,7 +121,8 @@ tasks {
         options.encoding = "UTF-8"
     }
 
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    withType<KotlinCompile> {
+        dependsOn(detekt)
         kotlinOptions.apply {
             jvmTarget = "1.8"
             freeCompilerArgs = listOf("-Xjsr305=strict")

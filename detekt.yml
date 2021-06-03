@@ -1,0 +1,27 @@
+# all rule sets: https://detekt.github.io/detekt
+# intellij plugin to execute checks on the fly: https://plugins.jetbrains.com/plugin/10761-detekt
+
+# we inherit all of the standard coding styles regarding linting as well as static analysis but overriding the following:
+
+build:
+  maxIssues: 0
+style:
+  MagicNumber:
+    ignoreNamedArgument: true
+    ignoreAnnotation: true
+    ignoreEnums: true
+    ignoreRanges: true
+  MaxLineLength:
+    active: false
+complexity:
+  LongParameterList:
+    ignoreDataClasses: true
+naming:
+  MatchingDeclarationName:
+    active: false
+performance:
+  SpreadOperator:
+    active: false
+formatting:
+  MaximumLineLength:
+    active: false
