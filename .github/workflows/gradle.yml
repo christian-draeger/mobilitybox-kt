@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Gradle Wraper Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/wrapper/
+          key: ${{ runner.OS }}-gradle-wraper-cache
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Temporarily set snapshot version
+        if: github.event_name == 'push'
+        uses: christian-draeger/write-properties@1.0.1
+        with:
+          path: './gradle.properties'
+          property: 'release_version'
+          value: 0-SNAPSHOT
+
+      - name: Publish snapshot to maven central
+        if: github.event_name == 'push'
+        env:
+          ORG_GRADLE_PROJECT_signingKey: ${{secrets.ORG_GRADLE_PROJECT_SIGNINGKEY}}
+          ORG_GRADLE_PROJECT_signingKeyId: ${{secrets.ORG_GRADLE_PROJECT_SIGNINGKEYID}}
+          ORG_GRADLE_PROJECT_signingPassword: ${{secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD}}
+          ORG_GRADLE_PROJECT_sonatypeUsername: ${{secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME}}
+          ORG_GRADLE_PROJECT_sonatypePassword: ${{secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD}}
+        run: ./gradlew publishToSonatype
