@@ -69,6 +69,17 @@ detekt {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    val kohttpVersion = "0.12.0"
+    implementation("io.github.rybalkinsd:kohttp:$kohttpVersion")
+    implementation("io.github.rybalkinsd:kohttp-jackson:$kohttpVersion")
+    implementation("com.github.tomakehurst:wiremock-jre8:2.28.0")
+    testImplementation("io.mockk:mockk:1.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("io.strikt:strikt-core:0.31.0")
+    val testcontainersVersion = "1.15.3"
+    testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
+    testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
+    testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version")
 }
 
