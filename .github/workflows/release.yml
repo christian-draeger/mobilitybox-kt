@@ -5,11 +5,8 @@ on:
     inputs:
       version:
         description: Bump Version
-        default: 1.0.0
+        default: 0.1.0
         required: true
-      tweet:
-        description: extra text for tweet
-        required: false
 
 jobs:
   build:
