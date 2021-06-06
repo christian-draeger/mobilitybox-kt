@@ -96,7 +96,7 @@ publishing {
             from(components["java"])
             pom {
                 name.set("Mobilitybox Kotlin client")
-                description.set("")
+                description.set("A kotlin client for themobilitybox.com")
                 url.set("https://github.com/christian-draeger/${rootProject.name}")
                 licenses {
                     license {
