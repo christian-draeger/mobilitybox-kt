@@ -1,8 +1,7 @@
 package mobilitybox.client.stations
 
-import mobilitybox.MobilityboxConfig
-import mobilitybox.MobilityboxDsl
 import mobilitybox.client.BaseClient.fetch
+import mobilitybox.client.Endpoints
 import mobilitybox.client.stations.StationsClientResponse.StationsClientResponseItem
 
 public class StationsClient(
@@ -10,11 +9,10 @@ public class StationsClient(
     public val baseUrl: String,
 ) {
 
-    internal val searchByNameEndpoint: String = "/stations/search_by_name.json"
     private val String.url get() = "$baseUrl/$apiVersion$this"
 
     public fun searchByName(query: String, position: GeoPosition? = null): StationsClientResponse? = fetch {
-        url = searchByNameEndpoint.url
+        url = Endpoints.STATIONS_SEARCH_BY_NAME.path.url
         extras = {
             param {
                 "query" to query
@@ -26,10 +24,8 @@ public class StationsClient(
         }
     }
 
-    internal val searchByPositionEndpoint: String = "/stations/search_by_position.json"
-
     public fun searchByPosition(position: GeoPosition): StationsClientResponse? = fetch {
-        url = searchByPositionEndpoint.url
+        url = Endpoints.STATIONS_SEARCH_BY_POSITION.path.url
         extras = {
             param {
                 "latitude" to position.latitude
@@ -38,10 +34,8 @@ public class StationsClient(
         }
     }
 
-    internal val searchByIdEndpoint: String = "/stations/search_by_position.json"
-
     public fun searchById(id: String, type: String? = null): StationsClientResponse? = fetch {
-        url = searchByIdEndpoint.url
+        url = Endpoints.STATIONS_SEARCH_BY_ID.path.url
         extras = {
             param {
                 "query" to id
@@ -70,7 +64,3 @@ public class StationsClientResponse : ArrayList<StationsClientResponseItem>() {
         )
     }
 }
-
-@MobilityboxDsl
-public fun <T> MobilityboxConfig.stations(init: StationsClient.() -> T): T =
-    StationsClient(apiVersion = apiVersion, baseUrl = baseUrl).init()

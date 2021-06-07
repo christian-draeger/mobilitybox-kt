@@ -2,9 +2,8 @@ package mobilitybox.client.departures
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import mobilitybox.MobilityboxConfig
-import mobilitybox.MobilityboxDsl
 import mobilitybox.client.BaseClient.fetch
+import mobilitybox.client.Endpoints
 
 internal val now: ULong get() = System.currentTimeMillis().toULong()
 
@@ -15,7 +14,7 @@ public class DeparturesClient(
     private val String.url get() = "$baseUrl/$apiVersion$this"
 
     public fun get(stationId: String, time: ULong = now, maxDepartures: UInt = 10u): DeparturesClientResponse? = fetch {
-        url = "/departures.json".url
+        url = Endpoints.DEPARTURES.path.url
         extras = {
             param {
                 "station_id" to stationId
@@ -57,7 +56,3 @@ public class DeparturesClientResponse : ArrayList<DeparturesClientResponse.Depar
         }
     }
 }
-
-@MobilityboxDsl
-public fun <T> MobilityboxConfig.departures(init: DeparturesClient.() -> T): T =
-    DeparturesClient(apiVersion = apiVersion, baseUrl = baseUrl).init()
