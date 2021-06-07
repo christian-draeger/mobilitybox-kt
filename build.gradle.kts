@@ -2,6 +2,7 @@
 
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_SRC_DIR_KOTLIN
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_TEST_SRC_DIR_KOTLIN
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -153,15 +154,10 @@ tasks {
         useJUnitPlatform()
         testLogging {
             events(
-                org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.FAILED
             )
         }
-        systemProperties = mapOf(
-            "junit.jupiter.execution.parallel.enabled" to true,
-            "junit.jupiter.execution.parallel.mode.default" to "concurrent",
-            "junit.jupiter.execution.parallel.mode.classes.default" to "concurrent"
-        )
     }
 }
