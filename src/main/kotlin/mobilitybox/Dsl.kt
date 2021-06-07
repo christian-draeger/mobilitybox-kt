@@ -10,7 +10,9 @@ import mobilitybox.client.Credentials
 public fun <T> mobilitybox(init: MobilityboxConfig.() -> T): T = MobilityboxConfig().init()
 
 public data class MobilityboxConfig(
-    var apiKey: String = ""
+    var apiKey: String = "",
+    var apiVersion: String = "v1",
+    var baseUrl: String = "https://api.themobilitybox.com"
 ) {
     init {
         Credentials.apiKey = apiKey

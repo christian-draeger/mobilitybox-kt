@@ -5,12 +5,16 @@ import mobilitybox.MobilityboxDsl
 import mobilitybox.client.BaseClient.fetch
 import mobilitybox.client.stations.StationsClientResponse.StationsClientResponseItem
 
-public class StationsClient {
+public class StationsClient(
+    public val apiVersion: String,
+    public val baseUrl: String,
+) {
 
-    public val searchByNameEndpoint: String = "/stations/search_by_name.json"
+    internal val searchByNameEndpoint: String = "/stations/search_by_name.json"
+    private val String.url get() = "$baseUrl/$apiVersion$this"
 
     public fun searchByName(query: String, position: GeoPosition? = null): StationsClientResponse? = fetch {
-        endpoint = searchByNameEndpoint
+        url = searchByNameEndpoint.url
         extras = {
             param {
                 "query" to query
@@ -22,10 +26,10 @@ public class StationsClient {
         }
     }
 
-    public val searchByPositionEndpoint: String = "/stations/search_by_position.json"
+    internal val searchByPositionEndpoint: String = "/stations/search_by_position.json"
 
     public fun searchByPosition(position: GeoPosition): StationsClientResponse? = fetch {
-        endpoint = searchByPositionEndpoint
+        url = searchByPositionEndpoint.url
         extras = {
             param {
                 "latitude" to position.latitude
@@ -34,10 +38,10 @@ public class StationsClient {
         }
     }
 
-    public val searchByIdEndpoint: String = "/stations/search_by_position.json"
+    internal val searchByIdEndpoint: String = "/stations/search_by_position.json"
 
     public fun searchById(id: String, type: String? = null): StationsClientResponse? = fetch {
-        endpoint = searchByIdEndpoint
+        url = searchByIdEndpoint.url
         extras = {
             param {
                 "query" to id
@@ -68,4 +72,5 @@ public class StationsClientResponse : ArrayList<StationsClientResponseItem>() {
 }
 
 @MobilityboxDsl
-public fun <T> MobilityboxConfig.stations(init: StationsClient.() -> T): T = StationsClient().init()
+public fun <T> MobilityboxConfig.stations(init: StationsClient.() -> T): T =
+    StationsClient(apiVersion = apiVersion, baseUrl = baseUrl).init()

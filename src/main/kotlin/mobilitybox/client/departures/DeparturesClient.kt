@@ -8,9 +8,14 @@ import mobilitybox.client.BaseClient.fetch
 
 internal val now: ULong get() = System.currentTimeMillis().toULong()
 
-public class DeparturesClient {
+public class DeparturesClient(
+    public val apiVersion: String,
+    public val baseUrl: String,
+) {
+    private val String.url get() = "$baseUrl/$apiVersion$this"
+
     public fun get(stationId: String, time: ULong = now, maxDepartures: UInt = 10u): DeparturesClientResponse? = fetch {
-        endpoint = "/departures.json"
+        url = "/departures.json".url
         extras = {
             param {
                 "station_id" to stationId
@@ -54,4 +59,5 @@ public class DeparturesClientResponse : ArrayList<DeparturesClientResponse.Depar
 }
 
 @MobilityboxDsl
-public fun <T> MobilityboxConfig.departures(init: DeparturesClient.() -> T): T = DeparturesClient().init()
+public fun <T> MobilityboxConfig.departures(init: DeparturesClient.() -> T): T =
+    DeparturesClient(apiVersion = apiVersion, baseUrl = baseUrl).init()

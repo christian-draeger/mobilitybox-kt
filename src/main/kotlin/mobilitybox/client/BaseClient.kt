@@ -9,14 +9,11 @@ import okhttp3.Response
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-internal const val BASE_URL = "https://api.themobilitybox.com"
-internal const val API_VERSION = "v1"
-
 public object BaseClient {
     internal inline fun <reified T : Any> fetch(init: BaseClientBuilder.() -> Unit) =
         with(BaseClientBuilder().also(init)) {
             httpGet {
-                url("$BASE_URL/$API_VERSION$endpoint")
+                url(url)
                 header {
                     "Authorization" to "Bearer ${Credentials.apiKey}"
                     "Accept" to "application/json"
@@ -34,7 +31,7 @@ public object BaseClient {
         }.deserialize<T>()
 
     internal data class BaseClientBuilder(
-        var endpoint: String = "",
+        var url: String = "",
         var extras: HttpGetContext.() -> Unit = {}
     )
 }
