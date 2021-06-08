@@ -55,7 +55,7 @@ internal class StationsClientTest {
     @Test
     internal fun `will return empty list on none successful status code`() {
         wiremock.setupStub(
-            path = Endpoints.DEPARTURES.path,
+            path = Endpoints.STATIONS_SEARCH_BY_POSITION.path,
             statusCode = 400,
             body = aValidStationsClientResponse()
         )
