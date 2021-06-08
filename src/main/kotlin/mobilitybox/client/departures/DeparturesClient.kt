@@ -13,25 +13,24 @@ public class DeparturesClient(
 ) {
     private val String.url get() = "$baseUrl/$apiVersion$this"
 
-    public fun get(stationId: String, time: ULong = now, maxDepartures: UInt = 10u): DeparturesClientResponse? = fetch {
-        url = Endpoints.DEPARTURES.path.url
-        extras = {
-            param {
-                "station_id" to stationId
-                "time" to time
-                "max_departures" to maxDepartures.toInt()
+    public fun get(stationId: String, time: ULong = now, maxDepartures: UInt = 10u): List<Departure> =
+        fetch<List<Departure>> {
+            url = Endpoints.DEPARTURES.path.url
+            extras = {
+                param {
+                    "station_id" to stationId
+                    "time" to time
+                    "max_departures" to maxDepartures.toInt()
+                }
             }
-        }
-    }
-}
+        }.orEmpty()
 
-public class DeparturesClientResponse : ArrayList<DeparturesClientResponse.Departure>() {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public data class Departure(
-        val departure: DepartureDetails,
-        val trip: TripDetails
+        val departure: Details,
+        val trip: Trip
     ) {
-        public data class DepartureDetails(
+        public data class Details(
             @JsonProperty("scheduled_at")
             val scheduledAt: Long,
             @JsonProperty("predicted_at")
@@ -39,7 +38,7 @@ public class DeparturesClientResponse : ArrayList<DeparturesClientResponse.Depar
             val platform: String
         )
 
-        public data class TripDetails(
+        public data class Trip(
             val id: String,
             @JsonProperty("end_station_id")
             val endStationId: String,

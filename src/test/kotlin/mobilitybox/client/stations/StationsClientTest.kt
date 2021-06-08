@@ -1,9 +1,8 @@
 package mobilitybox.client.stations
 
 import Testcontainer
+import aValidStationsClientResponse
 import mobilitybox.client.Endpoints
-import mobilitybox.client.stations.StationsClientResponse.StationsClientResponseItem
-import mobilitybox.client.stations.StationsClientResponse.StationsClientResponseItem.Position
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
@@ -12,26 +11,43 @@ val wiremock = Testcontainer.wiremock
 
 internal class StationsClientTest {
 
-    private val aValidResponse = StationsClientResponse().apply {
-        add(
-            StationsClientResponseItem(
-                id = "4711",
-                name = "some name",
-                position = Position(0.815, 0.815),
-            )
-        )
-    }
-
     @Test
     internal fun `can get stations by id`() {
 
         wiremock.setupStub(
             path = Endpoints.STATIONS_SEARCH_BY_ID.path,
-            body = aValidResponse
+            body = aValidStationsClientResponse()
         )
 
         with(StationsClient(baseUrl = wiremock.httpUrl, apiVersion = "v1")) {
-            expectThat(searchById("4711")).isEqualTo(aValidResponse)
+            expectThat(searchById("4711")).isEqualTo(aValidStationsClientResponse())
+        }
+    }
+
+    @Test
+    internal fun `can get stations by name`() {
+
+        wiremock.setupStub(
+            path = Endpoints.STATIONS_SEARCH_BY_NAME.path,
+            body = aValidStationsClientResponse()
+        )
+
+        with(StationsClient(baseUrl = wiremock.httpUrl, apiVersion = "v1")) {
+            expectThat(searchByName("foo")).isEqualTo(aValidStationsClientResponse())
+        }
+    }
+
+    @Test
+    internal fun `can get stations by position`() {
+
+        wiremock.setupStub(
+            path = Endpoints.STATIONS_SEARCH_BY_POSITION.path,
+            body = aValidStationsClientResponse()
+        )
+
+        with(StationsClient(baseUrl = wiremock.httpUrl, apiVersion = "v1")) {
+            val result = searchByPosition(StationsClient.GeoPosition(.0, .0))
+            expectThat(result).isEqualTo(aValidStationsClientResponse())
         }
     }
 }
