@@ -42,13 +42,13 @@ internal inline fun <reified T : Any> Response.deserialize() =
             try {
                 toType<T>().also { body()?.close() }
             } catch (e: JsonParseException) {
-                println("${T::class.simpleName} - deserialization error ${e.message}")
+                this@deserialize.logger.error("${T::class.simpleName} - deserialization error ${e.message}")
                 body()?.close()
                 null
             }
         }
         else -> {
-            println("${T::class.simpleName} - fetch error (${code()} - ${message()})")
+            this@deserialize.logger.error("${T::class.simpleName} - fetch error (${code()} - ${message()})")
             body()?.close()
             null
         }
