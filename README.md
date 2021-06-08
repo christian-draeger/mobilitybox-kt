@@ -1,4 +1,4 @@
-# Mobilitybox Kotlin Client
+# MobilityBox Kotlin Client
 
 ## Installation
 
