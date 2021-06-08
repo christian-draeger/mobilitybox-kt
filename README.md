@@ -4,7 +4,7 @@
 
 ### Gradle
 ```kotlin
-implementation("io.github.christian-draeger:mobilitybox-kt:0.1.0-alpha")
+implementation("io.github.christian-draeger:mobilitybox-kt:0.1.0")
 ```
 
 ### Maven
@@ -17,10 +17,9 @@ implementation("io.github.christian-draeger:mobilitybox-kt:0.1.0-alpha")
 ```
 
 ## Usage
-### search for Stations
+### Search for Stations
 ```kotlin
-val response = mobilitybox {
-    apiKey = "your-api-key"
+val response = mobilitybox(apiKey = "your-api-key") {
     stations {
         searchByName("gransee")
         // or
@@ -33,8 +32,7 @@ val response = mobilitybox {
 
 ### Get Departures
 ```kotlin
-val response = mobilitybox {
-    apiKey = "your-api-key"
+val response = mobilitybox(apiKey = "your-api-key") {
     departures {
         get("vesputi-station-OW_67U4PIKCwCBxtnNWwZ2jnsNS2WZA1eNY9MyjyvKs")
     }

@@ -9,7 +9,8 @@ import mobilitybox.client.stations.StationsClient
  * @return T
  */
 @MobilityboxDsl
-public fun <T> mobilitybox(init: MobilityboxConfig.() -> T): T = MobilityboxConfig().init()
+public fun <T> mobilitybox(apiKey: String, init: MobilityboxConfig.() -> T): T =
+    MobilityboxConfig().run(init).also { Credentials.apiKey = apiKey }
 
 @MobilityboxDsl
 public fun <T> MobilityboxConfig.stations(init: StationsClient.() -> T): T =
@@ -20,14 +21,9 @@ public fun <T> MobilityboxConfig.departures(init: DeparturesClient.() -> T): T =
     DeparturesClient(apiVersion = apiVersion, baseUrl = baseUrl).init()
 
 public data class MobilityboxConfig(
-    var apiKey: String = "",
     var apiVersion: String = "v1",
     var baseUrl: String = "https://api.themobilitybox.com"
-) {
-    init {
-        Credentials.apiKey = apiKey
-    }
-}
+)
 
 @DslMarker
 public annotation class MobilityboxDsl
