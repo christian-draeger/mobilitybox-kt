@@ -71,14 +71,17 @@ detekt {
 dependencies {
     implementation(kotlin("stdlib"))
     val kohttpVersion = "0.12.0"
+    val wiremockVersion = "2.28.0"
+    val mockkVersion = "1.11.0"
+    val junitVerion = "5.7.2"
+    val striktVersion = "0.31.0"
+    val testcontainersVersion = "1.15.3"
     implementation("io.github.rybalkinsd:kohttp:$kohttpVersion")
     implementation("io.github.rybalkinsd:kohttp-jackson:$kohttpVersion")
-    implementation("org.slf4j:slf4j-simple:1.7.30")
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.28.0")
-    testImplementation("io.mockk:mockk:1.11.0")
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.strikt:strikt-core:0.31.0")
-    val testcontainersVersion = "1.15.3"
+    testImplementation("com.github.tomakehurst:wiremock-jre8:$wiremockVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVerion")
+    testImplementation("io.strikt:strikt-core:$striktVersion")
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")

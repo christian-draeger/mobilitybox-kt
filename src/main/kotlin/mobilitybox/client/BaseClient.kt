@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory
 public object BaseClient {
     internal inline fun <reified T : Any> fetch(init: BaseClientBuilder.() -> Unit) =
         with(BaseClientBuilder().also(init)) {
-            logger.info("send request to '$url'")
+            logger.debug("sending request to '$url'")
             httpGet {
                 url(url)
                 header {
