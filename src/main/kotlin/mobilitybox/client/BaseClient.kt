@@ -23,6 +23,7 @@ public object BaseClient {
                     }
                 }
                 extras()
+                logger.info("send request to '$url'")
             }.also {
                 if (it.isSuccessful) {
                     Credentials.session = it.header("session-token")
