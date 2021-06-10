@@ -38,20 +38,15 @@ public class DeparturesClient(
             val platform: String
         )
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public data class Trip(
             val id: String,
             @JsonProperty("end_station_id")
             val endStationId: String,
-            val type: Type,
             @JsonProperty("line_name")
             val lineName: String,
             val provider: String,
             val headsign: String,
-        ) {
-            public data class Type(
-                val kind: String,
-                val product: String
-            )
-        }
+        )
     }
 }

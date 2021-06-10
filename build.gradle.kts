@@ -73,7 +73,8 @@ dependencies {
     val kohttpVersion = "0.12.0"
     implementation("io.github.rybalkinsd:kohttp:$kohttpVersion")
     implementation("io.github.rybalkinsd:kohttp-jackson:$kohttpVersion")
-    implementation("com.github.tomakehurst:wiremock-jre8:2.28.0")
+    implementation("org.slf4j:slf4j-simple:1.7.30")
+    testImplementation("com.github.tomakehurst:wiremock-jre8:2.28.0")
     testImplementation("io.mockk:mockk:1.11.0")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("io.strikt:strikt-core:0.31.0")

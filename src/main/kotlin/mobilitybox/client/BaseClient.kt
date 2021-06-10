@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory
 public object BaseClient {
     internal inline fun <reified T : Any> fetch(init: BaseClientBuilder.() -> Unit) =
         with(BaseClientBuilder().also(init)) {
+            logger.info("send request to '$url'")
             httpGet {
                 url(url)
                 header {
@@ -23,7 +24,6 @@ public object BaseClient {
                     }
                 }
                 extras()
-                logger.info("send request to '$url'")
             }.also {
                 if (it.isSuccessful) {
                     Credentials.session = it.header("session-token")

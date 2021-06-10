@@ -1,7 +1,6 @@
 import mobilitybox.client.departures.DeparturesClient.Departure
 import mobilitybox.client.departures.DeparturesClient.Departure.Details
 import mobilitybox.client.departures.DeparturesClient.Departure.Trip
-import mobilitybox.client.departures.DeparturesClient.Departure.Trip.Type
 import mobilitybox.client.stations.StationsClient.GeoPosition
 import mobilitybox.client.stations.StationsClient.Station
 
@@ -27,10 +26,6 @@ internal val aValidDeparturesClientResponse = listOf(
         trip = Trip(
             id = "some-id",
             endStationId = "Pankow", // <--
-            type = Type(
-                kind = "foo",
-                product = "bar"
-            ),
             lineName = "XXX", // <--
             provider = "BVG",
             headsign = "111"
