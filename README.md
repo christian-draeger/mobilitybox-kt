@@ -1,4 +1,5 @@
-# MobilityBox Kotlin Client
+# Mobilitybox Kotlin Client
+A Kotlin client implementation for the [mobilitybox](https://developer.themobilitybox.com) API.
 
 ## Installation
 
@@ -12,7 +13,7 @@ implementation("io.github.christian-draeger:mobilitybox-kt:0.1.0")
 <dependency>
   <groupId>io.github.christian-draeger</groupId>
   <artifactId>mobilitybox-kt</artifactId>
-  <version>0.1.0-alpha</version>
+  <version>0.1.0</version>
 </dependency>
 ```
 
