@@ -69,7 +69,6 @@ detekt {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
     val kohttpVersion = "0.12.0"
     val wiremockVersion = "2.28.0"
     val mockkVersion = "1.11.0"
@@ -78,6 +77,8 @@ dependencies {
     val testcontainersVersion = "1.15.3"
     implementation("io.github.rybalkinsd:kohttp:$kohttpVersion")
     implementation("io.github.rybalkinsd:kohttp-jackson:$kohttpVersion")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+
     testImplementation("com.github.tomakehurst:wiremock-jre8:$wiremockVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVerion")
